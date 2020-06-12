@@ -3,8 +3,8 @@
 set -eu
 
 readonly DATE=`date +%Y%m%d`
-readonly IMGNAME=endorphin-$DATE-rpi4.img
-readonly IMGSIZE=4
+readonly IMGNAME=endorphin--lineage--$DATE--rpi4.img
+readonly IMGSIZE=2
 readonly OUTDIR=${ANDROID_PRODUCT_OUT:="../../../out/target/product/erpi4"}
 
 echo "creating image file $IMGNAME"
