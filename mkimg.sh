@@ -52,7 +52,7 @@ sleep 1
 
 sudo mkfs.fat -F 32 "/dev/mapper/${LOOPDEV}p1"
 sudo mkfs.ext4 "/dev/mapper/${LOOPDEV}p4"
-sudo resize2fs "/dev/mapper/${LOOPDEV}p4" 256000
+sudo resize2fs "/dev/mapper/${LOOPDEV}p4" 142336
 
 echo "copying system"
 sudo dd if="$OUTDIR/system.img" "of=/dev/mapper/${LOOPDEV}p2" bs=1M
