@@ -117,11 +117,16 @@ PRODUCT_BRAND := endorphin
 PRODUCT_MANUFACTURER := Endorphin
 PRODUCT_MODEL := Raspberry Pi 4
 PRODUCT_RELEASE_NAME := Raspberry Pi 4
+PRODUCT_MANUFACTURER := Raspberry
 TARGET_VENDOR := endorphin
 
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 PRODUCT_CHARACTERISTICS := tablet
+
+TARGET_BOOTANIMATION_HALF_RES := true
+TARGET_SCREEN_WIDTH := 1280
+TARGET_SCREEN_HEIGHT := 720
 
 WITH_SU := true
 
@@ -133,8 +138,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     gralloc.drm.device=/dev/dri/card1 \
     ro.opengles.version=196609 \
     wifi.interface=wlan0 \
-    debug.sf.nobootanimation=1 \
-		qemu.hw.mainkeys=0
+		qemu.hw.mainkeys=0 \
+		ro.rfkilldisabled=1
+
+# debug.sf.nobootanimation=1 \
 
 # application packages
 PRODUCT_PACKAGES += \
@@ -217,6 +224,14 @@ PRODUCT_COPY_FILES := \
     $(LOCAL_PATH)/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
     frameworks/base/data/sounds/effects/ogg/Effect_Tick_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/Effect_Tick.ogg \
     $(PRODUCT_COPY_FILES)
+
+# Bluetooth
+PRODUCT_COPY_FILES := \
+    $(LOCAL_PATH)/firmware/brcm/BCM43430A1.hcd:root/lib/firmware/brcm/BCM43430A1.hcd \
+    $(LOCAL_PATH)/firmware/brcm/BCM43430A1.hcd:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/brcm/BCM43430A1.hcd \
+    $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf \
+    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
 
 DEVICE_PACKAGE_OVERLAYS := device/endorphin/erpi4/overlay
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi

@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+#
+DEVICE_PATH := device/endorphin/erpi4
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := true
@@ -23,6 +26,9 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a72
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
+
+BOARD_KERNEL_IMAGE_NAME=zImage
+TARGET_KERNEL_SOURCE := kernel/arpi
 
 TARGET_USES_64_BIT_BINDER := true
 
@@ -52,6 +58,13 @@ BOARD_USES_DRM_GRALLOC := true
 USE_OPENGL_RENDERER := true
 TARGET_USES_HWC2 := true
 TARGET_SCREEN_DENSITY := 213
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+USE_BLUETOOTH_BCM4343 := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/endorphin/erpi4/bluetooth
+BOARD_CUSTOM_BT_CONFIG := device/endorphin/erpi4/bluetooth/vnd_rpi4.txt
 
 # Wifi
 BOARD_WLAN_DEVICE := bcmdhd
