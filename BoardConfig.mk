@@ -59,13 +59,6 @@ USE_OPENGL_RENDERER := true
 TARGET_USES_HWC2 := true
 TARGET_SCREEN_DENSITY := 213
 
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-USE_BLUETOOTH_BCM4343 := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/endorphin/erpi4/bluetooth
-BOARD_CUSTOM_BT_CONFIG := device/endorphin/erpi4/bluetooth/vnd_rpi4.txt
-
 # Wifi
 BOARD_WLAN_DEVICE := bcmdhd
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd

@@ -1,95 +1,3 @@
-#
-# Copyright 2020 Android-RPi Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-#
-# AOSP packages
-PRODUCT_PACKAGES += \
-    Terminal
-
-# Lineage packages
-PRODUCT_PACKAGES += \
-    LineageParts \
-    LineageSettingsProvider \
-    LineageSetupWizard
-
-# Themes
-PRODUCT_PACKAGES += \
-    LineageThemesStub \
-    ThemePicker
-
-# Extra tools in Lineage
-PRODUCT_PACKAGES += \
-    7z \
-    awk \
-    bash \
-    bzip2 \
-    curl \
-    getcap \
-    htop \
-    lib7z \
-    libsepol \
-    nano \
-    pigz \
-    powertop \
-    setcap \
-    unrar \
-    unzip \
-    vim \
-    wget \
-    zip
-
-# Filesystems tools
-PRODUCT_PACKAGES += \
-    fsck.exfat \
-    fsck.ntfs \
-    mke2fs \
-    mkfs.exfat \
-    mkfs.ntfs \
-    mount.ntfs
-
-# Openssh
-PRODUCT_PACKAGES += \
-    scp \
-    sftp \
-    ssh \
-    sshd \
-    sshd_config \
-    ssh-keygen \
-    start-ssh
-
-# rsync
-PRODUCT_PACKAGES += \
-    rsync
-
-# Storage manager
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.storage_manager.enabled=true
-
-# These packages are excluded from user builds
-PRODUCT_PACKAGES_DEBUG += \
-    procmem
-
-
-# Dex preopt
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUI \
-    TrebuchetQuickStep
-
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay
-DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/common
-
 PRODUCT_VERSION_MAJOR = 17
 PRODUCT_VERSION_MINOR = 1
 PRODUCT_VERSION_MAINTENANCE := 0
@@ -104,12 +12,9 @@ PRODUCT_COPY_FILES += \
 # USE_OEM_TV_APP := true
 AB_OTA_PARTITIONS=n
 $(call inherit-product, vendor/lineage/config/common_mini_tablet_wifionly.mk)
-# $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/go_defaults.mk)
 $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
-
-include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
 PRODUCT_NAME := erpi4
 PRODUCT_DEVICE := erpi4
@@ -119,6 +24,8 @@ PRODUCT_MODEL := Raspberry Pi 4
 PRODUCT_RELEASE_NAME := Raspberry Pi 4
 PRODUCT_MANUFACTURER := Raspberry
 TARGET_VENDOR := endorphin
+
+LINEAGE_BUILD=hkoosha
 
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := mdpi
@@ -134,13 +41,11 @@ include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.drm.mode.force=1280x720 \
-    gralloc.drm.kms=/dev/dri/card0 \
-    gralloc.drm.device=/dev/dri/card1 \
+    gralloc.drm.device=/dev/dri/card0 \
+    gralloc.drm.kms=/dev/dri/card1 \
     ro.opengles.version=196609 \
     wifi.interface=wlan0 \
-		qemu.hw.mainkeys=0 \
-		ro.rfkilldisabled=1
-
+		qemu.hw.mainkeys=0
 # debug.sf.nobootanimation=1 \
 
 # application packages
@@ -153,7 +58,6 @@ PRODUCT_PACKAGES += \
     Music \
     Launcher3 \
     LiveWallpapersPicker \
-    RPiCalculator \
     ThemePicker
 
 # system packages
@@ -189,12 +93,12 @@ PRODUCT_PACKAGES += \
     android.hardware.configstore@1.1-service \
     vndservicemanager
 
+# system configurations
 PRODUCT_COPY_FILES := \
     hardware/broadcom/wlan/bcmdhd/config/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    $(LOCAL_PATH)/rpi4_core_hardware.xml:system/etc/permissions/rpi4_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
+    frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     $(LOCAL_PATH)/init.usb.rc:root/init.usb.rc \
     $(LOCAL_PATH)/init.rpi4.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rpi4.rc \
     $(LOCAL_PATH)/init.rpi4.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rpi4.usb.rc \
@@ -225,15 +129,8 @@ PRODUCT_COPY_FILES := \
     frameworks/base/data/sounds/effects/ogg/Effect_Tick_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/Effect_Tick.ogg \
     $(PRODUCT_COPY_FILES)
 
-# Bluetooth
-PRODUCT_COPY_FILES := \
-    $(LOCAL_PATH)/firmware/brcm/BCM43430A1.hcd:root/lib/firmware/brcm/BCM43430A1.hcd \
-    $(LOCAL_PATH)/firmware/brcm/BCM43430A1.hcd:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/brcm/BCM43430A1.hcd \
-    $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf \
-    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
-    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
-
 DEVICE_PACKAGE_OVERLAYS := device/endorphin/erpi4/overlay
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_CHARACTERISTICS := tablet
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
